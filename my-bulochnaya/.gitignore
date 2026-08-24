@@ -1,0 +1,12 @@
+# Node modules (если будешь ставить зависимости)
+node_modules/
+
+# Локальные конфиги
+.env
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+*.swp
+*.swo

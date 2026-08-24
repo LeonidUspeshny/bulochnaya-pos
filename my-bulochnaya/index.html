@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Рабочее место кассира — Булочная</title>
+    <!-- Подключаем стили -->
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <!-- ПРОВЕРКА АВТОРИЗАЦИИ (сразу при загрузке) через API -->
+    <script>
+      (async () => {
+        try {
+          const res = await fetch('/api/profile');
+          if (!res.ok) {
+            window.location.href = 'login.html';
+            return;
+          }
+          const data = await res.json();
+          if (!data.success) {
+            window.location.href = 'login.html';
+          }
+        } catch (e) {
+          window.location.href = 'login.html';
+        }
+      })();
+    </script>
+
+    <!-- NAVBAR: сюда JS подгрузит меню -->
+    <!-- Важно: id должен быть именно таким для работы JS и CSS -->
+    <div id="navbar-container"></div>
+
+    <main class="workspace">
+      
+      <!-- ГЛОБАЛЬНАЯ КОРЗИНА (справа) -->
+      <!-- Вынесена из секции sale, чтобы стоять на одном уровне с контентом -->
+      <aside class="global-cart fixed-cart">
+        <h2 class="section-title">Корзина</h2>
+        
+        <div class="cart-items" id="cart-items">
+          <!-- Сюда JS будет вставлять товары -->
+          <p style="text-align:center; color:#999; padding: 20px;">Корзина пуста</p>
+        </div>
+
+        <div class="cart-total">
+          <span>Итого:</span>
+          <span class="total-amount" id="cart-total-amount">0 ₽</span>
+        </div>
+
+        <button class="btn-primary btn-full">Оплатить</button>
+      </aside>
+
+      <!-- СЕКЦИЯ: Продажа (активна по умолчанию) -->
+      <section id="sale" class="active-section">
+        <div class="sale-layout">
+          <div class="sale-left">
+            <h2 class="section-title">Подбор товара</h2>
+
+            <!-- КНОПКИ КАТЕГОРИЙ -->
+            <div class="category-buttons">
+              <button class="cat-btn active" data-category="all">Все товары</button>
+              <button class="cat-btn" data-category="bread">Хлеб</button>
+              <button class="cat-btn" data-category="pastries">Пирожные</button>
+              <button class="cat-btn" data-category="cookies">Печенье</button>
+              <button class="cat-btn" data-category="buns">Булочки</button>
+              <button class="cat-btn" data-category="cakes">Кексы/Маффины</button>
+            </div>
+
+            <!-- ПОИСК -->
+            <div class="search-block">
+              <!-- id обязателен для доступа из JS -->
+              <input type="text" id="search-input" class="input-large" placeholder="Поиск по названию или штрихкоду (Enter)" />
+              <button id="search-btn" class="btn-icon">🔍</button>
+            </div>
+
+            <!-- СЕТКА ТОВАРОВ (сюда JS будет рисовать карточки) -->
+            <div class="products-grid" id="products-container">
+              <!-- Товары появятся здесь -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- СЕКЦИЯ: Отчёты (заглушка, можно расширять) -->
+      <section id="reports" class="hidden-section">
+        <h2 class="section-title">Отчёты по продажам</h2>
+        <p>Здесь будут графики и статистика по сменам.</p>
+      </section>
+      
+    </main>
+
+    <!-- МОДАЛЬНОЕ ОКНО ВЫХОДА -->
+    <div id="logout-modal" class="modal-overlay hidden">
+      <div class="modal-window">
+        <h3 class="modal-title">Подтверждение выхода</h3>
+        <p class="modal-text">Вы уверены, что хотите выйти из системы? Текущая смена будет завершена.</p>
+        <div class="modal-buttons">
+          <button id="btn-logout-confirm" class="tool-btn tool-btn-danger">Да, выйти</button>
+          <button id="btn-logout-cancel" class="tool-btn">Отмена</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ПОДКЛЮЧЕНИЕ JS -->
+  </body>
+</html>

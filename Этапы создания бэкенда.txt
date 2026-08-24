@@ -1,0 +1,27 @@
+1. PostgreSQL
+sudo apt update && sudo apt install -y postgresql postgresql-contrib
+sudo -u postgres psql -c "CREATE DATABASE bakery_pos;"
+sudo -u postgres psql -c "CREATE USER bakery_user WITH PASSWORD 'strongpassword123';"
+sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE bakery_pos TO bakery_user;"
+
+2. Node.js
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo - bash
+sudo apt install -y nodejs
+
+3. Проект
+# Размести папки: /var/www/bakery-pos (фронт) и /var/www/bakery-pos-backend (бэк)
+mkdir -p /var/www
+# скопируй my-bulochnaya/ → /var/www/bakery-pos
+# скопируй bakery-pos-backend/ → /var/www/bakery-pos-backend
+
+cd /var/www/bakery-pos-backend
+npm install
+node init-db.js     # создаёт таблицу users + админа
+node server.js      # запуск на порту 3000
+
+Файл .env уже настроен (FRONTEND_PATH=/var/www/bakery-pos). Если ВМ в локальной сети, пропиши её IP в CORS_ORIGIN в .env: CORS_ORIGIN=http://<IP-виртуалки>
+
+Для продакшена добавь pm2:
+npm install -g pm2
+pm2 start server.js --name bakery-pos
+pm2 save && pm2 startup

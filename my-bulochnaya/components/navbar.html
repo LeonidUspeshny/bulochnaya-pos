@@ -1,0 +1,27 @@
+<header class="navbar-header">
+  <div class="navbar-brand">
+    <div class="brand-icon">
+  <img src="../logo/bakery-logo.jpg" alt="Логотип Булочной" class="logo-img">
+</div>
+    <span class="brand-text">Булочная</span>
+  </div>
+
+  <!-- Левая часть: кнопки навигации -->
+  <nav class="main-tabs">
+    <button type="button" class="tab-btn active" data-target="sale">Продажа</button>
+    <button type="button" class="tab-btn" data-target="returns">Возврат</button>
+    <button type="button" class="tab-btn" data-target="discounts">Скидки</button>
+    <button type="button" class="tab-btn" data-target="reports">Отчёты</button>
+  </nav>
+
+  <!-- Правая часть: статус кассира и настройки -->
+  <div class="navbar-right">
+    <!-- Сюда JS будет писать «Кассир: Иван • Смена №123» -->
+    <span class="user-status"></span>
+
+    <button id="btn-settings" type="button" class="tool-btn tool-btn-sm">⚙️</button>
+    
+    <!-- Кнопка выхода (триггер модального окна) -->
+    <button id="btn-logout-trigger" type="button" class="tool-btn tool-btn-danger-sm">Выход</button>
+  </div>
+</header>
