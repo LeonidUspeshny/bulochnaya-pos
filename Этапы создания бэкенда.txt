@@ -25,3 +25,12 @@ node server.js      # запуск на порту 3000
 npm install -g pm2
 pm2 start server.js --name bakery-pos
 pm2 save && pm2 startup
+Выполни команду, которую предложил PM2, чтобы настроить автозапуск:
+sudo env PATH=$PATH:/usr/bin /usr/local/lib/node_modules/pm2/bin/pm2 startup systemd -u leo --hp /home/leo
+Сохрани список процессов
+pm2 save
+Проверь статус:
+pm2 status
+systemctl status pm2-leo
+Посмотреть активные ингибиторы
+systemd-inhibit --list
